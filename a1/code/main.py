@@ -65,28 +65,33 @@ if __name__ == "__main__":
         # part 4: correlation between columns
         min_cor=[sys.float_info.max,0,0]
         max_cor=[sys.float_info.min,0,0]
+        R=np.corrcoef(X.T)
+        #print(R)
+        #print(names)
         """shape returns [row,column]"""
-        for i in range(0,X.shape[1]-1):
-            for j in range(i+1,X.shape[1]):
-                new_cor=np.correlate(X[:,i],X[:,j])
-                if min_cor[0]>=new_cor:
-                    min_cor[0]=new_cor
+        for i in range(0,R.shape[1]-2):
+            for j in range(i+1,R.shape[1]-1):
+                if min_cor[0]>R[i][j]:
+                    min_cor[0]=R[i][j]
                     min_cor[1]=i
                     min_cor[2]=j
-                if max_cor[0]<=new_cor:
-                    max_cor[0]=new_cor
+                if max_cor[0]<R[i][j]:
+                    max_cor[0]=R[i][j]
                     max_cor[1]=i
                     max_cor[2]=j
-        print("min correlation is %.2f btw cities %s and %s"
+        print("min correlation is %.4f btw cities %s and %s"
             %(min_cor[0],names[min_cor[1]],names[min_cor[2]]))
-        print("max correlation is %.2f btw cities %s and %s"
-                %(max_cor[0],names[max_cor[1]],names[max_cor[2]]))
+        print("max correlation is %.4f btw cities %s and %s"
+        %(max_cor[0],names[max_cor[1]],names[max_cor[2]]))
+
 
     elif question == "1.2":
         # Q1.2 - This should plot the answers to Q 1.2
         # Load the fluTrends dataset
         X, names = utils.load_dataset("fluTrends")
-
+        plt.plot(X)
+        #plt.axis(names)
+        plt.show()
         # Plot required figures
 
         """ YOUR CODE HERE"""
