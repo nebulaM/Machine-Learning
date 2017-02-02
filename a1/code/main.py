@@ -3,6 +3,7 @@ import argparse
 
 import utils
 import pylab as plt
+from matplotlib.ticker import FormatStrFormatter
 
 import numpy as np
 import naive_bayes
@@ -69,8 +70,8 @@ if __name__ == "__main__":
         #print(R)
         #print(names)
         """shape returns [row,column]"""
-        for i in range(0,R.shape[1]-2):
-            for j in range(i+1,R.shape[1]-1):
+        for i in range(0,R.shape[1]-1):
+            for j in range(i+1,R.shape[1]):
                 if min_cor[0]>R[i][j]:
                     min_cor[0]=R[i][j]
                     min_cor[1]=i
@@ -84,18 +85,55 @@ if __name__ == "__main__":
         print("max correlation is %.4f btw cities %s and %s"
         %(max_cor[0],names[max_cor[1]],names[max_cor[2]]))
 
-
     elif question == "1.2":
         # Q1.2 - This should plot the answers to Q 1.2
         # Load the fluTrends dataset
         X, names = utils.load_dataset("fluTrends")
-        plt.plot(X)
-        #plt.axis(names)
-        plt.show()
+
         # Plot required figures
-
         """ YOUR CODE HERE"""
-
+        print("1. A plot containing the weeks on the x-axis "
+        "and the percentages for each region on the y-axis.")
+        print("")
+        print("2. A boxplot grouping data by weeks showing "
+        "the distribution across regions for each week.")
+        print("")
+        print("3. A histogram showing the distribution of "
+        "each the values in the matrix X.")
+        print("")
+        print("4. A single histogram showing the distribution "
+        "of each column in X.")
+        print("")
+        print("5. A scatterplot between the two regions with "
+        "lowest correlation.")
+        print("")
+        print("6. A scatterplot between the two regions with "
+        "highest correlation.")
+        print("")
+        select=input("select a figure to print(key 1-6)...\n")
+        if select == 1:
+            plt.plot(X.T)
+            #plt.axis(names)
+            plt.show()
+        elif select == 2:
+            """xLabel=[]
+            for i in range(0,X.shape[1]):
+                xLabel.append(i+1)"""
+            plt.boxplot(X.T)
+            #plt.yticks(xLabel,names)
+            plt.title("flue trend in among weeks")
+            plt.show()
+        elif select == 3:
+            """http://stackoverflow.com/questions/6352740/matplotlib-label-each-bin"""
+            fig, ax = plt.subplots()
+            counts, bins, patches = ax.hist(X)
+            ax.set_xticks(bins)
+            ax.xaxis.set_major_formatter(FormatStrFormatter('%0.2f'))
+            plt.title("Distribution in flue trend")
+            plt.show()
+        else:
+            print("Not a valid input, exit from q1.2")
+            sys.exit()
     elif question == "2.1":
         # Q2.1 - Decision Stump with the inequality rule Implementation
 
