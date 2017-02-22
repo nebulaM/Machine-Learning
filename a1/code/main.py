@@ -10,6 +10,7 @@ import naive_bayes
 import decision_stump
 import decision_tree
 import mode_predictor
+import scatterplot_features as sp_f
 
 from sklearn.tree import DecisionTreeClassifier
 
@@ -32,7 +33,6 @@ if __name__ == "__main__":
         X, names = utils.load_dataset("fluTrends")
 
         """ YOUR CODE HERE"""
-        #print(X)
         # part 1: min, max, mean, median and mode
         print("min: %.2f max: %.2f mean: %.2f median: %.2f"
         %(np.min(X),np.max(X),np.mean(X),np.median(X)))
@@ -68,7 +68,8 @@ if __name__ == "__main__":
         max_cor=[sys.float_info.min,0,0]
         R=np.corrcoef(X.T)
         #print(R)
-        #print(names)
+        #print(R.shape)
+        """R is NxN matrix, use either column or row is fine"""
         """shape returns [row,column]"""
         for i in range(0,R.shape[1]-1):
             for j in range(i+1,R.shape[1]):
@@ -89,51 +90,55 @@ if __name__ == "__main__":
         # Q1.2 - This should plot the answers to Q 1.2
         # Load the fluTrends dataset
         X, names = utils.load_dataset("fluTrends")
-
         # Plot required figures
         """ YOUR CODE HERE"""
-        print("1. A plot containing the weeks on the x-axis "
-        "and the percentages for each region on the y-axis.")
-        print("")
-        print("2. A boxplot grouping data by weeks showing "
-        "the distribution across regions for each week.")
-        print("")
-        print("3. A histogram showing the distribution of "
-        "each the values in the matrix X.")
-        print("")
-        print("4. A single histogram showing the distribution "
-        "of each column in X.")
-        print("")
-        print("5. A scatterplot between the two regions with "
-        "lowest correlation.")
-        print("")
-        print("6. A scatterplot between the two regions with "
-        "highest correlation.")
-        print("")
-        select=input("select a figure to print(key 1-6)...\n")
-        if select == 1:
-            plt.plot(X.T)
-            #plt.axis(names)
-            plt.show()
-        elif select == 2:
-            """xLabel=[]
-            for i in range(0,X.shape[1]):
+        while True:
+            print("1. A plot containing the weeks on the x-axis "
+            "and the percentages for each region on the y-axis.\n")
+            print("2. A boxplot grouping data by weeks showing "
+            "the distribution across regions for each week.\n")
+            print("3. A histogram showing the distribution of "
+            "each the values in the matrix X.\n")
+            print("4. A single histogram showing the distribution "
+            "of each column in X.\n")
+            print("5. A scatterplot between the two regions with "
+            "lowest correlation.\n")
+            print("6. A scatterplot between the two regions with "
+            "highest correlation.\n")
+            print("7. A scatterplot for all regions\n")
+            print("q/quit to quit\n")
+            select=input("select a figure to print(key 1-7)...\n")
+            if select == '1':
+                plt.plot(X.T)
+                #plt.axis(names)
+                plt.show()
+            elif select == '2':
+                """xLabel=[]
+                for i in range(0,X.shape[1]):
                 xLabel.append(i+1)"""
-            plt.boxplot(X.T)
-            #plt.yticks(xLabel,names)
-            plt.title("flue trend in among weeks")
-            plt.show()
-        elif select == 3:
-            """http://stackoverflow.com/questions/6352740/matplotlib-label-each-bin"""
-            fig, ax = plt.subplots()
-            counts, bins, patches = ax.hist(X)
-            ax.set_xticks(bins)
-            ax.xaxis.set_major_formatter(FormatStrFormatter('%0.2f'))
-            plt.title("Distribution in flue trend")
-            plt.show()
-        else:
-            print("Not a valid input, exit from q1.2")
-            sys.exit()
+                plt.boxplot(X.T)
+                #plt.yticks(xLabel,names)
+                plt.title("flue trend in among weeks")
+                plt.show()
+            elif select == '3':
+                """http://stackoverflow.com/questions/6352740/matplotlib-label-each-bin"""
+                fig, ax = plt.subplots()
+                counts, bins, patches = ax.hist(X)
+                ax.set_xticks(bins)
+                ax.xaxis.set_major_formatter(FormatStrFormatter('%0.2f'))
+                plt.title("Distribution in flue trend")
+                plt.show()
+            elif select == '5':
+                sp_f.scatterplot(X,names,["NE","Mtn"])
+            elif select == '6':
+                sp_f.scatterplot(X,names,["MidAtl","ENCentral"])
+            elif select == '7':
+                sp_f.scatterplot(X,names,names)
+            elif select == 'q' or select == "quit":
+                sys.exit()
+            else:
+                print("Not a valid input, exit from q1.2")
+
     elif question == "2.1":
         # Q2.1 - Decision Stump with the inequality rule Implementation
 
