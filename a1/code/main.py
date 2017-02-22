@@ -137,7 +137,7 @@ if __name__ == "__main__":
             elif select == 'q' or select == "quit":
                 sys.exit()
             else:
-                print("Not a valid input, exit from q1.2")
+                print("Not a valid input")
 
     elif question == "2.1":
         # Q2.1 - Decision Stump with the inequality rule Implementation
