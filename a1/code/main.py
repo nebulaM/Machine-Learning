@@ -10,7 +10,7 @@ import naive_bayes
 import decision_stump
 import decision_tree
 import mode_predictor
-import scatterplot_features as sp_f
+import scatterplot_feature as sp_f
 
 from sklearn.tree import DecisionTreeClassifier
 
