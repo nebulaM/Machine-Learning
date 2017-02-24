@@ -165,7 +165,12 @@ if __name__ == "__main__":
         # 4. Evaluate decision stump with inequality rule
 
         """ YOUR CODE HERE"""
+        model = decision_stump.fit(X, y)
+        y_pred = decision_stump.predict(model, X)
 
+        error = np.sum(y_pred != y) / float(X.shape[0])
+        print("Decision Stump with inequality rule error: %.3f"
+              % error)
         # PLOT RESULT
         utils.plotClassifier(model, X, y)
         fname = "../figs/q2.1_decisionBoundary.pdf"
