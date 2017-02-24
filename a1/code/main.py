@@ -173,9 +173,10 @@ if __name__ == "__main__":
               % error)
         # PLOT RESULT
         utils.plotClassifier(model, X, y)
-        fname = "../figs/q2.1_decisionBoundary.pdf"
+        plt.show()
+        """fname = "../figs/q2.1_decisionBoundary.pdf"
         plt.savefig(fname)
-        print("\nFigure saved as '%s'" % fname)
+        print("\nFigure saved as '%s'" % fname)"""
 
 
     elif question == "2.2":
@@ -210,19 +211,33 @@ if __name__ == "__main__":
         dataset = utils.load_dataset("citiesSmall")
         X, y = dataset["X"], dataset["y"]
         X_test, y_test = dataset["Xtest"], dataset["ytest"]
+        errorsDict=dict()
+        errorsDict["tr"]=[]
+        errorsDict["te"]=[]
 
-        model = DecisionTreeClassifier(criterion='entropy', max_depth=2)
-        model.fit(X, y)
+        for i in range(1,16):
+            model = DecisionTreeClassifier(criterion='entropy', max_depth=i)
+            model.fit(X, y)
 
-        y_pred = model.predict(X)
-        tr_error = np.mean(y_pred != y)
+            y_pred = model.predict(X)
+            tr_error = np.mean(y_pred != y)
 
-        y_pred = model.predict(X_test)
-        te_error = np.mean(y_pred != y_test)
+            y_pred = model.predict(X_test)
+            te_error = np.mean(y_pred != y_test)
 
-        print("Training error: %.3f" % tr_error)
-        print("Testing error: %.3f" % te_error)
+            errorsDict["tr"].append(tr_error)
+            errorsDict["te"].append(te_error)
+            """print("For depth %d",i)
+            print("Training error: %.3f" % tr_error)
+            print("Testing error: %.3f" % te_error)"""
 
+        plt.plot(np.arange(15)+1,errorsDict["te"], label="Training error")
+        plt.plot(np.arange(15)+1,errorsDict["tr"], label="Testing error")
+        plt.legend()
+        plt.xlabel("Decision Tree Depth")
+        plt.ylabel("Error")
+        plt.title("Error vs Decision Tree Depth")
+        plt.show()
 
     elif question == "4.3":
         # Q4.3 - Train Naive Bayes
