@@ -29,14 +29,10 @@ def fit(X, y):
     # after this loop, p_xy contains p(x n y)*N
     for n in range(N):
         for d in range(D):
-            if X[n, d] == 1:
-                for c in range(C):
-                    if y[n]==labels[c]:
-                        p_xy[d,c,1]+=1
-            elif X[n, d] == 0:
-                for c in range(C):
-                    if y[n]==labels[c]:
-                        p_xy[d,c,0]+=1
+            for c in range(C):
+                if y[n]==labels[c]:
+                    p_xy[d,c,X[n, d] ]+=1
+                    
     # p(x n y)*N / N = p(x n y)
     # p(x n y)/p(y) = p(x|y)
     # recall p(y) =counts/N
@@ -68,7 +64,7 @@ def predict(model, X):
 
     y_pred = np.zeros(N)
 
-    for n in range(N):
+    """for n in range(N):
         # Compute the probability for each class
         # This could be vectorized but we've tried to provide
         # an intuitive version.
@@ -87,6 +83,10 @@ def predict(model, X):
                     probs[c] *= p_xy[d, c, 0]
 
         # predict the label with highest prob
-        y_pred[n] = labels[np.argmax(probs)]
-
+        y_pred[n] = labels[np.argmax(probs)]"""
+    for n in range(N):
+        probs = p_y.copy()
+        for d in range(D):
+            probs*=p_xy[d,:,X[n, d]]
+        y_pred[n]=labels[np.argmax(probs)]
     return y_pred
