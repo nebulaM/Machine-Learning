@@ -259,7 +259,7 @@ if __name__ == "__main__":
         print("Decision Tree Validation error: %.3f" % v_error)
 
         # 3. Evaluate the Naive Bayes Model
-        model = naive_bayes.fit_wrong(X, y)
+        model = naive_bayes.fit(X, y)
 
         y_pred = naive_bayes.predict(model, X_valid)
 
