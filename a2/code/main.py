@@ -31,6 +31,11 @@ if __name__ == '__main__':
         # part 1: implement knn.predict
         # part 2: print training and test errors for k=1,3,10 (use utils.classification_error)
         # part 3: plot classification boundaries for k=1 (use utils.plot_2dclassifier)
+        model_1 = knn.fit(X, y, 1)
+        knn.report(1, X, y, Xtest, ytest)
+        knn.report(3, X, y, Xtest, ytest)
+        knn.report(10, X, y, Xtest, ytest)
+        utils.plot_2dclassifier(model_1, X, y)
 
     if question == '1.2':
         dataset = utils.load_dataset('citiesBig1')
